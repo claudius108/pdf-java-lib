@@ -78,6 +78,12 @@
 			<scope>system</scope>
 			<systemPath>/home/claudius/PDFClown/java/pdfclown.samples.cli/build/package/pdfclown-samples-cli.jar</systemPath>
 		</dependency>
+		<dependency>
+			<groupId>com.ui4j</groupId>
+			<artifactId>ui4j-all</artifactId>
+			<version>1.2.0</version>
+			<scope>test</scope>
+		</dependency>
 	</dependencies>
 
 </project>
