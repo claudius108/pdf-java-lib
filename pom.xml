@@ -12,6 +12,18 @@
 	<artifactId>pdf</artifactId>
 	<version>0.1.2</version>
 
+	<prerequisites>
+		<maven>${mavenVersion}</maven>
+	</prerequisites>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java-version>1.7</java-version>
+		<mavenVersion>3.1.1</mavenVersion>
+		<path-to-pdfclown>/home/claudius/PDFClown/java/pdfclown.lib/build/package/pdfclown.jar</path-to-pdfclown>
+		<path-to-pdfclown-samples>/home/claudius/PDFClown/java/pdfclown.samples.cli/build/package/pdfclown-samples-cli.jar</path-to-pdfclown-samples>
+	</properties>
+
 	<repositories>
 		<repository>
 			<id>osgeo</id>
@@ -69,14 +81,14 @@
 			<artifactId>pdfclown</artifactId>
 			<version>0.1.8</version>
 			<scope>system</scope>
-			<systemPath>/home/claudius/PDFClown/java/pdfclown.lib/build/package/pdfclown.jar</systemPath>
+			<systemPath>${path-to-pdfclown}</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>org.pdfclown</groupId>
 			<artifactId>pdfclown-samples</artifactId>
 			<version>0.1.8</version>
 			<scope>system</scope>
-			<systemPath>/home/claudius/PDFClown/java/pdfclown.samples.cli/build/package/pdfclown-samples-cli.jar</systemPath>
+			<systemPath>${path-to-pdfclown-samples}</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>com.ui4j</groupId>

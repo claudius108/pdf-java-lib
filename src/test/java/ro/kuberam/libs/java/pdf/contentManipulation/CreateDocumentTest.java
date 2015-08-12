@@ -10,6 +10,7 @@ import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import com.ui4j.api.browser.BrowserEngine;
@@ -25,8 +26,9 @@ public class CreateDocumentTest {
 				"/home/claudius/workspaces/repositories/git/kuberam/libs/java/pdf/target/stamped-document.pdf");
 	}
 
+	@Ignore
 	@Test
-	public void testStampSignature2() throws IOException {
+	public void test1() throws IOException {
 		BrowserEngine webKit = BrowserFactory.getWebKit();
 
 		PageConfiguration config = new PageConfiguration();

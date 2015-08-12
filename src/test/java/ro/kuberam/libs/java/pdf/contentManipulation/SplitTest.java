@@ -1,22 +1,16 @@
 package ro.kuberam.libs.java.pdf.contentManipulation;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URISyntaxException;
 import java.util.List;
 
-import org.apache.pdfbox.cos.COSName;
-import org.apache.pdfbox.cos.COSStream;
 import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.common.PDStream;
 import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class SplitTest {
@@ -27,8 +21,9 @@ public class SplitTest {
 				"/home/claudius/workspaces/repositories/git/kuberam/libs/java/pdf/target/stamped-document.pdf");
 	}
 
+	@Ignore
 	@Test
-	public void testStampSignature2() throws IOException {
+	public void test1() throws IOException {
 		InputStream pdfIs = new FileInputStream(pdfFilePath);
 
 		PDDocument pdfDocument = PDDocument.load(pdfFilePath);
