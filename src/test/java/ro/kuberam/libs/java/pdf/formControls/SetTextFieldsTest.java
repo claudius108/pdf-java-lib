@@ -10,7 +10,6 @@ import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.junit.Test;
 
 public class SetTextFieldsTest {
@@ -18,7 +17,7 @@ public class SetTextFieldsTest {
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test1() throws IOException, XMLStreamException, COSVisitorException {
+	public void test1() throws IOException, XMLStreamException {
 
 		InputStream pdfIs = getClass().getResourceAsStream("SF.pdf");
 		
@@ -34,7 +33,7 @@ public class SetTextFieldsTest {
 		ByteArrayOutputStream output = SetTextFields.run(pdfIs, fieldsMap);
 
 		try {
-			FileOutputStream fos = new FileOutputStream(new File("target/result.pdf"));
+			FileOutputStream fos = new FileOutputStream(new File("target/SetTextFieldsTest.pdf"));
 			output.writeTo(fos);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

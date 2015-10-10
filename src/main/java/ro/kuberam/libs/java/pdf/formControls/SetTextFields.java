@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
@@ -13,9 +12,9 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 public class SetTextFields {
 
 	public static ByteArrayOutputStream run(InputStream pdfIs, Map<String, String> fieldsMap)
-			throws IOException, COSVisitorException {
+			throws IOException {
 
-		PDDocument pdfDocument = PDDocument.load(pdfIs, true);
+		PDDocument pdfDocument = PDDocument.load(pdfIs);
 		PDAcroForm acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 

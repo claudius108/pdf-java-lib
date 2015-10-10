@@ -2,11 +2,13 @@ package ro.kuberam.libs.java.pdf.stamp;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
 import org.apache.pdfbox.exceptions.COSVisitorException;
+import org.apache.pdfbox.io.RandomAccessFile;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
@@ -70,12 +72,14 @@ public class StringStamper {
 	public ByteArrayOutputStream stamp() {
 
 		PDDocument doc = null;
+		File tempFile = new File("result.tmp");
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
 		try {
-			doc = PDDocument.load(inputPdfIs, true);
+//			doc = PDDocument.load(inputPdfIs, true);
+			doc = PDDocument.load(inputPdfIs, new RandomAccessFile(tempFile, "rw"));
 
-			List<?> allPages = doc.getDocumentCatalog().getAllPages();
+			List<?> allPages = doc.getDocumentCatalog().getPages().getKids();
 
 			CssParser cssParser = new CssParser();
 			CSS2JavaModel css2JavaModel = cssParser.parseCssDeclaration(stampStyling);

@@ -18,7 +18,7 @@ public class GetTextFields {
 
 	public static Map<String, String> run(InputStream pdfIs) throws IOException, XMLStreamException {
 
-		PDDocument pdfDocument = PDDocument.load(pdfIs, true);
+		PDDocument pdfDocument = PDDocument.load(pdfIs);
 		PDAcroForm acroForm = pdfDocument.getDocumentCatalog().getAcroForm();
 
 		@SuppressWarnings("unchecked")

@@ -5,7 +5,6 @@ import java.io.InputStream;
 
 import javax.xml.stream.XMLStreamException;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.junit.Test;
@@ -15,25 +14,21 @@ public class SetDocumentMetadataTest {
 	@Test
 	public void test1() throws IOException, XMLStreamException {
 		PDDocument pdfDocument = null;
-		
-		try {
-			InputStream pdfIs = getClass().getResourceAsStream("../formControls/SF.pdf");
 
-			pdfDocument = PDDocument.load(pdfIs, true);
+		InputStream pdfIs = getClass().getResourceAsStream("../formControls/SF.pdf");
 
-			PDDocumentInformation metadata = pdfDocument.getDocumentInformation();
+		pdfDocument = PDDocument.load(pdfIs);
 
-			metadata.setAuthor("claudius");
+		PDDocumentInformation metadata = pdfDocument.getDocumentInformation();
 
-			System.out.println(metadata.getAuthor());
+		metadata.setAuthor("claudius");
 
-			pdfDocument.save("target/SetDocumentMetadataTest.pdf");
-		} catch (COSVisitorException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			pdfDocument.close();
-		}
+		System.out.println(metadata.getAuthor());
+
+		pdfDocument.save("target/SetDocumentMetadataTest.pdf");
+
+		pdfDocument.close();
+
 	}
 
 }

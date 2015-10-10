@@ -16,7 +16,7 @@ public class GetMetadata {
 
 		HashMap<String, Object> metadata = new HashMap<String, Object>();
 
-		PDDocument pdfDocument = PDDocument.load(pdfIs, true);
+		PDDocument pdfDocument = PDDocument.load(pdfIs);
 		PDDocumentInformation documentInformation = pdfDocument.getDocumentInformation();
 
 		metadata.put("creator", documentInformation.getCreator());
