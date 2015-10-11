@@ -15,11 +15,11 @@ public class GetTextFieldsTest {
 	@Test
 	public void test1() throws IOException, XMLStreamException {
 
-		InputStream pdfIs = getClass().getResourceAsStream("SF.pdf");
+		InputStream pdfIs = getClass().getResourceAsStream("GetTextFieldsTest.pdf");
 
 		Map<String, String> result = GetTextFields.run(pdfIs);
 
-		FileOutputStream fos = new FileOutputStream("target/result.ser");
+		FileOutputStream fos = new FileOutputStream("target/GetTextFieldsTest.ser");
 		ObjectOutputStream oos = new ObjectOutputStream(fos);
 		oos.writeObject(result);
 		oos.close();
