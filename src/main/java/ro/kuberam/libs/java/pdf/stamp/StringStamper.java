@@ -2,19 +2,18 @@ package ro.kuberam.libs.java.pdf.stamp;
 
 import java.awt.Color;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
-import org.apache.pdfbox.io.RandomAccessFile;
+import org.apache.pdfbox.cos.COSDictionary;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
 import org.apache.pdfbox.pdmodel.font.PDFont;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
+import org.apache.pdfbox.util.Matrix;
 
 import ro.kuberam.libs.java.pdf.CSS2Java.CSS2JavaModel;
 import ro.kuberam.libs.java.pdf.CSS2Java.CssParser;
@@ -72,14 +71,10 @@ public class StringStamper {
 	public ByteArrayOutputStream stamp() {
 
 		PDDocument doc = null;
-		File tempFile = new File("result.tmp");
 		ByteArrayOutputStream output = new ByteArrayOutputStream();
 
 		try {
-//			doc = PDDocument.load(inputPdfIs, true);
-			doc = PDDocument.load(inputPdfIs, new RandomAccessFile(tempFile, "rw"));
-
-			List<?> allPages = doc.getDocumentCatalog().getPages().getKids();
+			doc = PDDocument.load(inputPdfIs);
 
 			CssParser cssParser = new CssParser();
 			CSS2JavaModel css2JavaModel = cssParser.parseCssDeclaration(stampStyling);
@@ -99,24 +94,16 @@ public class StringStamper {
 			fontSize = (float) fontSizePropertyValue.getAsIntValue();
 			color = (Color) css2JavaModel.getProperty("color");
 
-			PDFont font = PDType1Font.getStandardFont(fontFamily);
+			COSDictionary fontDictionary = new COSDictionary();
+			fontDictionary.setItem(COSName.SUBTYPE, COSName.TYPE1);
+			fontDictionary.setName(COSName.BASE_FONT, fontFamily);
 
-			for (int i = 0; i < allPages.size(); i++) {
-				// create an empty page and a geo object to use for calcs
-				PDPage page = (PDPage) allPages.get(i);
-				PDRectangle mediabox = page.findMediaBox();
-				float marginLeft = (mediabox.getWidth() - page.findCropBox().getWidth()) / 2;
-				float marginTop = (mediabox.getHeight() - page.findCropBox().getHeight()) / 2;
+			PDFont font = new PDType1Font(fontDictionary);
 
-//				System.out.println("mediabox.getLowerLeftX() " + mediabox.getUpperRightX());
-//				System.out.println("mediabox.getUpperRightY() " + mediabox.getUpperRightY());
-//				System.out.println("mediabox.getHeight() " + mediabox.getHeight());
-//				System.out.println("mediabox.getWidth() " + mediabox.getWidth());
-//				System.out.println("page.findCropBox().getHeight() " + page.findCropBox().getHeight());
-//				System.out.println("page.findCropBox().getWidth() " + page.findCropBox().getWidth());
-//				System.out.println("marginLeft " + marginLeft);
-//				System.out.println("marginTop " + marginTop);
-//				System.out.println();
+			for (PDPage page : doc.getPages()) {
+				PDRectangle mediabox = page.getMediaBox();
+				float marginLeft = (mediabox.getWidth() - page.getCropBox().getWidth()) / 2;
+				float marginTop = (mediabox.getHeight() - page.getCropBox().getHeight()) / 2;
 
 				marginTop = (marginTop == 0) ? fontSize : marginTop;
 				float top = mediabox.getHeight() - (stampTop + marginTop);
@@ -127,7 +114,7 @@ public class StringStamper {
 
 				// determine the rotation stuff. Is the the loaded page in
 				// landscape mode? (for axis and string dims)
-				int pageRot = page.findRotation();
+				int pageRot = page.getRotation();
 				boolean pageRotated = pageRot == 90 || pageRot == 270;
 
 				// are we rotating the text?
@@ -137,54 +124,58 @@ public class StringStamper {
 				// calc the diff of rotations so the text stamps
 				int totalRot = pageRot - textRotation;
 
-				// calc the page dimensions
-				float pageWidth = pageRotated ? mediabox.getHeight() : mediabox.getWidth();
-				float pageHeight = pageRotated ? mediabox.getWidth() : mediabox.getHeight();
-
-				// determine the axis of rotation
-				double centeredXPosition = pageRotated ? pageHeight / 2f : (pageWidth - stringWidth) / 2f;
-				double centeredYPosition = pageRotated ? (pageWidth - stringWidth) / 2f : pageHeight / 2f;
-
-				// append the content to the existing stream
 				PDPageContentStream contentStream = new PDPageContentStream(doc, page, true, true, true);
-				contentStream.beginText();
 
+				PDRectangle pageSize = page.getMediaBox();
+				// calculate to center of the page
+				int rotation = page.getRotation();
+				boolean rotate = rotation == 90 || rotation == 270;
+				float pageWidth = rotate ? pageSize.getHeight() : pageSize.getWidth();
+				float pageHeight = rotate ? pageSize.getWidth() : pageSize.getHeight();
+				float centerX = rotate ? pageHeight / 2f : (pageWidth - stringWidth) / 2f;
+				float centerY = rotate ? (pageWidth - stringWidth) / 2f : pageHeight / 2f;
+				// append the content to the existing stream
+				contentStream.beginText();
 				// set font and font size
 				contentStream.setFont(font, fontSize);
 
-				// set the stroke (text) color
+				if (rotate) {
+					// rotate the text according to the page rotation
+					contentStream.setTextMatrix(Matrix.getRotateInstance(Math.PI / 2, centerX, centerY));
+				} else {
+					contentStream.setTextMatrix(Matrix.getTranslateInstance(left, top));
+				}
+
 				contentStream.setNonStrokingColor(color);
 
 				// if we are rotating, do it
-				if (pageRotated) {
+				// if (pageRotated) {
+				//
+				// // rotate the text according to the calculations above
+				// contentStream.setTextRotation(Math.toRadians(totalRot),
+				// centeredXPosition,
+				// centeredYPosition);
+				//
+				// } else if (textRotated) {
+				//
+				// // rotate the text according to the calculations above
+				// contentStream.setTextRotation(Math.toRadians(textRotation),
+				// left, top);
+				//
+				// } else {
+				//
+				// // no rotate, just move it.
+				// contentStream.moveTextPositionByAmount(left, top);
+				// }
 
-					// rotate the text according to the calculations above
-					contentStream.setTextRotation(Math.toRadians(totalRot), centeredXPosition,
-							centeredYPosition);
-
-				} else if (textRotated) {
-
-					// rotate the text according to the calculations above
-					contentStream.setTextRotation(Math.toRadians(textRotation), left, top);
-
-				} else {
-
-					// no rotate, just move it.
-					contentStream.moveTextPositionByAmount(left, top);
-				}
-
-				contentStream.drawString(stampString);
-
+				contentStream.showText(stampString);
 				contentStream.endText();
-
 				contentStream.close();
 			}
 
 			doc.save(output);
 
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (COSVisitorException e) {
 			e.printStackTrace();
 		} finally {
 
