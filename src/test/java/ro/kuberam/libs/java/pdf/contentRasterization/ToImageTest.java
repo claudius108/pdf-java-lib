@@ -8,12 +8,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.rendering.PDFRenderer;
 import org.icepdf.core.exceptions.PDFException;
 import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
@@ -41,15 +40,10 @@ public class ToImageTest {
 	public void testPdfbox() throws IOException {
 		InputStream pdfIs = new FileInputStream(pdfFilePath);
 
-		PDDocument pdf = PDDocument.load(pdfIs, true);
-		List<PDPage> pages = pdf.getDocumentCatalog().getAllPages();
+		PDDocument pdf = PDDocument.load(pdfIs);
 
-		BufferedImage image = pages.get(0).convertToImage();
-
-		File imageFile = new File(targetDirPath.getAbsolutePath() + File.separator + "export-by-pdfbox.png");
-
-		ImageIO.write(image, "png", imageFile);
-		image.flush();
+        BufferedImage bim = new PDFRenderer(pdf).renderImageWithDPI(0, 300);
+        ImageIO.write(bim, "png", new File("target/testPdfbox.png"));
 
 		pdf.close();
 

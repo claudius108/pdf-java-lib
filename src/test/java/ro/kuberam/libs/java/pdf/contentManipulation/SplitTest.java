@@ -4,44 +4,27 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.List;
 
-import org.apache.pdfbox.exceptions.COSVisitorException;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
-import org.apache.pdfbox.pdmodel.edit.PDPageContentStream;
+import org.apache.pdfbox.pdmodel.PDPageContentStream;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class SplitTest {
 
-	private static File pdfFilePath;
-	static {
-		pdfFilePath = new File(
-				"/home/claudius/workspaces/repositories/git/kuberam/libs/java/pdf/target/stamped-document.pdf");
-	}
-
-	@Ignore
 	@Test
 	public void test1() throws IOException {
-		InputStream pdfIs = new FileInputStream(pdfFilePath);
+		InputStream pdfIs = getClass().getResourceAsStream("../formControls/SF.pdf");
 
-		PDDocument pdfDocument = PDDocument.load(pdfFilePath);
+		PDDocument pdfDocument = PDDocument.load(pdfIs);
 
-		List<?> allPages = pdfDocument.getDocumentCatalog().getAllPages();
-
-		for (int i = 0; i < allPages.size(); i++) {
-			PDPage page = (PDPage) allPages.get(i);
+		for (PDPage page : pdfDocument.getPages()) {
 			PDPageContentStream pageContentStream = new PDPageContentStream(pdfDocument, page, true, true);
 			pageContentStream.close();
 		}
 
-		try {
-			pdfDocument.save(new File(
-					"/home/claudius/workspaces/repositories/git/kuberam/libs/java/pdf/target/compressed.pdf"));
-		} catch (COSVisitorException e) {
-			e.printStackTrace();
-		}
+		pdfDocument.save(new File("target/compressed.pdf"));
 
 		// try {
 		//
@@ -83,10 +66,11 @@ public class SplitTest {
 
 }
 
-//private static PDDocument loadPdfDocumentFromBytes(byte[] imageOfPdf) throws IOException {
-//    ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(imageOfPdf);
-//    return PDDocument.load(byteArrayInputStream);
+// private static PDDocument loadPdfDocumentFromBytes(byte[] imageOfPdf) throws
+// IOException {
+// ByteArrayInputStream byteArrayInputStream = new
+// ByteArrayInputStream(imageOfPdf);
+// return PDDocument.load(byteArrayInputStream);
 //
-//}
-
+// }
 
