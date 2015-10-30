@@ -48,8 +48,6 @@ public class GetTextFields {
 				getTextField(child, sParent, result);
 			}
 		} else {
-			System.out.println(field);
-			System.out.println(field.getFullyQualifiedName() + " = " + field.getValueAsString());
 			result.put(field.getFullyQualifiedName(), field.getValueAsString());
 		}
 	}
