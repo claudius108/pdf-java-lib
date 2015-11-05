@@ -19,9 +19,20 @@ public class GetMetadata {
 		PDDocument pdfDocument = PDDocument.load(pdfIs);
 		PDDocumentInformation documentInformation = pdfDocument.getDocumentInformation();
 
-		metadata.put("creator", documentInformation.getCreator());
+		metadata.put("title", documentInformation.getTitle());
+		metadata.put("subject", documentInformation.getSubject());
 		metadata.put("author", documentInformation.getAuthor());
+		metadata.put("keywords", documentInformation.getKeywords());
+		metadata.put("producer", documentInformation.getProducer());
+		metadata.put("creator", documentInformation.getCreator());
+		metadata.put("created", documentInformation.getCreationDate());
+		metadata.put("modified", documentInformation.getModificationDate());
+		metadata.put("format", pdfDocument.getVersion());
 		metadata.put("number-of-pages", pdfDocument.getNumberOfPages());
+		metadata.put("optimized", "");
+		metadata.put("security", "");
+		metadata.put("paper-size", "");
+		metadata.put("fonts", pdfDocument.getDocumentCatalog().getCOSObject());
 
 		pdfDocument.close();
 
