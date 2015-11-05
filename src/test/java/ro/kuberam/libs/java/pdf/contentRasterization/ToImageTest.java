@@ -21,9 +21,14 @@ import org.icepdf.core.util.GraphicsRenderingHints;
 import org.jpedal.PdfDecoder;
 import org.jpedal.exception.PdfException;
 import org.jpedal.fonts.FontMappings;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public class ToImageTest {
+
+	@Rule
+	public TestName name = new TestName();
 
 	private static File pdfFilePath;
 	private File targetDirPath = new File(System.getProperty("user.home"));
@@ -42,8 +47,8 @@ public class ToImageTest {
 
 		PDDocument pdf = PDDocument.load(pdfIs);
 
-        BufferedImage bim = new PDFRenderer(pdf).renderImageWithDPI(0, 300);
-        ImageIO.write(bim, "png", new File("target/testPdfbox.png"));
+		BufferedImage bim = new PDFRenderer(pdf).renderImageWithDPI(0, 300);
+		ImageIO.write(bim, "png", new File("target/" + name.getMethodName() + ".png"));
 
 		pdf.close();
 
@@ -67,7 +72,7 @@ public class ToImageTest {
 			for (int i = start; i < end + 1; i++) {
 				BufferedImage img = decode_pdf.getPageAsImage(i);
 				File outputfile = new File(targetDirPath.getAbsolutePath() + File.separator
-						+ "export-by-jpedal.png");
+						+ name.getMethodName() + ".png");
 				ImageIO.write(img, "png", outputfile);
 			}
 
@@ -104,7 +109,8 @@ public class ToImageTest {
 				Page.BOUNDARY_CROPBOX, rotation, scale);
 		RenderedImage rendImage = image;
 		try {
-			File file = new File(targetDirPath.getAbsolutePath() + File.separator + "export-by-icepdf.png");
+			File file = new File(targetDirPath.getAbsolutePath() + File.separator + name.getMethodName()
+					+ ".png");
 			ImageIO.write(rendImage, "png", file);
 		} catch (IOException e) {
 			e.printStackTrace();

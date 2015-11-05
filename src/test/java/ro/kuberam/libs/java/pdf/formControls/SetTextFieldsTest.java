@@ -10,14 +10,17 @@ import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public class SetTextFieldsTest {
-
+	
+	@Rule public TestName name = new TestName();
 
 	@SuppressWarnings("unchecked")
 	@Test
-	public void test1() throws IOException, XMLStreamException {
+	public void setTExtFieldsTest1() throws IOException, XMLStreamException {
 
 		InputStream pdfIs = getClass().getResourceAsStream("SF.pdf");
 		
@@ -33,7 +36,7 @@ public class SetTextFieldsTest {
 		ByteArrayOutputStream output = SetTextFields.run(pdfIs, fieldsMap);
 
 		try {
-			FileOutputStream fos = new FileOutputStream(new File("target/SetTextFieldsTest.pdf"));
+			FileOutputStream fos = new FileOutputStream(new File("target/" + name.getMethodName() + ".pdf"));
 			output.writeTo(fos);
 		} catch (IOException ioe) {
 			ioe.printStackTrace();

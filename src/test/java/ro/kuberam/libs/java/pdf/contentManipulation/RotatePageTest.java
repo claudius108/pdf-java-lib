@@ -1,4 +1,4 @@
-package ro.kuberam.libs.java.pdf.metadata;
+package ro.kuberam.libs.java.pdf.contentManipulation;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -6,28 +6,26 @@ import java.io.InputStream;
 import javax.xml.stream.XMLStreamException;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.PDPage;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
 
-public class SetDocumentMetadataTest {
+public class RotatePageTest {
 	
 	@Rule public TestName name = new TestName();
-	
+
 	@Test
-	public void setDocumentMetadataTest1() throws IOException, XMLStreamException {
+	public void rotatePageTest1() throws IOException, XMLStreamException {
 		PDDocument pdfDocument = null;
 
-		InputStream pdfIs = getClass().getResourceAsStream("../formControls/SF.pdf");
+		InputStream pdfIs = getClass().getResourceAsStream("../D5_US4268005A_002-6_edit.pdf");
 
 		pdfDocument = PDDocument.load(pdfIs);
 
-		PDDocumentInformation metadata = pdfDocument.getDocumentInformation();
-
-		metadata.setAuthor("claudius");
-
-		System.out.println(metadata.getAuthor());
+		for (PDPage page : pdfDocument.getPages()) {
+			page.setRotation(360);;
+		}
 
 		pdfDocument.save("target/" + name.getMethodName() + ".pdf");
 

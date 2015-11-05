@@ -6,10 +6,14 @@ import java.util.Map;
 
 import javax.xml.stream.XMLStreamException;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public class GetDocumentMetadataTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	@Test
 	public void test1() throws IOException, XMLStreamException {
 

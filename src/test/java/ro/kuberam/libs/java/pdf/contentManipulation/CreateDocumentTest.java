@@ -4,7 +4,9 @@ import java.io.File;
 import java.io.IOException;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import com.ui4j.api.browser.BrowserEngine;
 import com.ui4j.api.browser.BrowserFactory;
@@ -12,7 +14,9 @@ import com.ui4j.api.browser.Page;
 import com.ui4j.api.browser.PageConfiguration;
 
 public class CreateDocumentTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	private static File pdfFilePath;
 	static {
 		pdfFilePath = new File(

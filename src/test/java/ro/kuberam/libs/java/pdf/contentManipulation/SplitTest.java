@@ -1,20 +1,22 @@
 package ro.kuberam.libs.java.pdf.contentManipulation;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public class SplitTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	@Test
-	public void test1() throws IOException {
+	public void splitTest1() throws IOException {
 		InputStream pdfIs = getClass().getResourceAsStream("../formControls/SF.pdf");
 
 		PDDocument pdfDocument = PDDocument.load(pdfIs);
@@ -24,7 +26,7 @@ public class SplitTest {
 			pageContentStream.close();
 		}
 
-		pdfDocument.save(new File("target/compressed.pdf"));
+		pdfDocument.save(new File("target/" + name.getMethodName() + ".pdf"));
 
 		// try {
 		//

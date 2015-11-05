@@ -10,10 +10,14 @@ import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
 
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 public class OcrTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	@Ignore
 	@Test
 	public void test1() throws IOException, XMLStreamException {

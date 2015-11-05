@@ -1,21 +1,19 @@
 package ro.kuberam.libs.java.pdf.stamp;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import org.junit.Test;
-import org.pdfclown.samples.cli.AnnotationSample;
-
 import java.awt.Color;
 import java.awt.geom.Dimension2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.rules.TestName;
 import org.pdfclown.documents.Document;
 import org.pdfclown.documents.Page;
 import org.pdfclown.documents.contents.ITextString;
@@ -35,7 +33,9 @@ import org.pdfclown.util.math.Interval;
 import org.pdfclown.util.math.geom.Quad;
 
 public class AnnotationSampleTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	@Test
 	public void testHighlight() throws IOException {
 		// AnnotationSample as = new AnnotationSample();

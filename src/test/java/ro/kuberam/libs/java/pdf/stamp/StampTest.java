@@ -15,8 +15,13 @@ import java.nio.charset.Charset;
 import org.apache.pdfbox.pdfparser.PDFStreamParser;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestName;
 
 import com.helger.commons.charset.CCharset;
 import com.helger.css.ECSSVersion;
@@ -27,7 +32,9 @@ import com.helger.css.reader.CSSReader;
 import com.helger.css.writer.CSSWriterSettings;
 
 public class StampTest {
-
+	
+	@Rule public TestName name = new TestName();
+	
 	private static File pdfFilePath;
 	static {
 		try {
@@ -38,8 +45,9 @@ public class StampTest {
 		}
 	}
 
+	@Ignore
 	@Test
-	public void testStampSignature2() throws IOException {
+	public void stampTest2() throws IOException {
 		InputStream pdfIs = new FileInputStream(pdfFilePath);
 
 		ByteArrayOutputStream output = null;
@@ -50,7 +58,7 @@ public class StampTest {
 
 		try {
 			output = app.stamp();
-			FileOutputStream fos = new FileOutputStream(new File("target/testStampSignature2.pdf"));
+			FileOutputStream fos = new FileOutputStream(new File("target/" + name.getMethodName() + ".pdf"));
 			output.writeTo(fos);
 		} catch (IllegalArgumentException e) {
 			e.printStackTrace();
@@ -59,6 +67,24 @@ public class StampTest {
 		}
 	}
 
+	@Test
+	public void testJsonup() throws IOException {
+		String html = "<p>An <a href='http://example.com/' style=\"left: 70pt; top: 70pt; font-family: Helvetica; font-size: 22pt; color: rgb(144,144,0);\"><b>example</b></a> link.</p>";
+		Document doc = Jsoup.parse(html);
+		Element link = doc.select("a").first();
+
+		String text = doc.body().text(); // "An example link"
+		String linkHref = link.attr("href"); // "http://example.com/"
+		String linkText = link.text(); // "example""
+
+		String linkOuterH = link.outerHtml();
+		// "<a href="http://example.com"><b>example</b></a>"
+		String linkInnerH = link.html(); // "<b>example</b>"
+
+		System.out.println(link.attributes().toString());
+	}
+
+	@Ignore
 	@Test
 	public void testReadExpressions() {
 		final ECSSVersion eVersion = ECSSVersion.CSS30;
