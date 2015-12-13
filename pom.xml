@@ -18,7 +18,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java-version>1.7</java-version>
+		<java-version>1.8</java-version>
 		<mavenVersion>3.1.1</mavenVersion>
 		<path-to-pdfclown>/home/claudius/PDFClown/java/pdfclown.lib/build/package/pdfclown.jar</path-to-pdfclown>
 		<path-to-pdfclown-samples>/home/claudius/PDFClown/java/pdfclown.samples.cli/build/package/pdfclown-samples-cli.jar</path-to-pdfclown-samples>
