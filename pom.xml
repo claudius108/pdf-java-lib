@@ -41,6 +41,11 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		<!-- repository for java-wkhtmltopdf-wrapper -->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
 	</repositories>
 
 	<dependencies>
@@ -103,6 +108,12 @@
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
 			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.jhonnymertz</groupId>
+			<artifactId>java-wkhtmltopdf-wrapper</artifactId>
+			<version>1.0.1-RELEASE</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
