@@ -18,7 +18,6 @@ import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
-import org.jpedal.PdfDecoder;
 import org.jpedal.exception.PdfException;
 import org.jpedal.fonts.FontMappings;
 import org.junit.Rule;
@@ -54,36 +53,36 @@ public class ToImageTest {
 
 	}
 
-	@Test
-	public void testJpedal() throws IOException {
-		/** instance of PdfDecoder to convert PDF into image */
-		PdfDecoder decode_pdf = new PdfDecoder(true);
-
-		/** set mappings for non-embedded fonts to use */
-		FontMappings.setFontReplacements();
-
-		/** open the PDF file - can also be a URL or a byte array */
-		try {
-			decode_pdf.openPdfFile(pdfFilePath.getAbsolutePath());
-
-			/** get page 1 as an image */
-			// page range if you want to extract all pages with a loop
-			int start = 217, end = 217;
-			for (int i = start; i < end + 1; i++) {
-				BufferedImage img = decode_pdf.getPageAsImage(i);
-				File outputfile = new File(targetDirPath.getAbsolutePath() + File.separator
-						+ name.getMethodName() + ".png");
-				ImageIO.write(img, "png", outputfile);
-			}
-
-			/** close the pdf file */
-			decode_pdf.closePdfFile();
-
-		} catch (PdfException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	@Test
+//	public void testJpedal() throws IOException {
+//		/** instance of PdfDecoder to convert PDF into image */
+//		PdfDecoder decode_pdf = new PdfDecoder(true);
+//
+//		/** set mappings for non-embedded fonts to use */
+//		FontMappings.setFontReplacements();
+//
+//		/** open the PDF file - can also be a URL or a byte array */
+//		try {
+//			decode_pdf.openPdfFile(pdfFilePath.getAbsolutePath());
+//
+//			/** get page 1 as an image */
+//			// page range if you want to extract all pages with a loop
+//			int start = 217, end = 217;
+//			for (int i = start; i < end + 1; i++) {
+//				BufferedImage img = decode_pdf.getPageAsImage(i);
+//				File outputfile = new File(targetDirPath.getAbsolutePath() + File.separator
+//						+ name.getMethodName() + ".png");
+//				ImageIO.write(img, "png", outputfile);
+//			}
+//
+//			/** close the pdf file */
+//			decode_pdf.closePdfFile();
+//
+//		} catch (PdfException e) {
+//			e.printStackTrace();
+//		}
+//
+//	}
 
 	@Test
 	public void testICEpdf() {

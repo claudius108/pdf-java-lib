@@ -60,11 +60,11 @@
 			<version>2.0.4</version>
 			<scope>provided</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.jpedal</groupId>
-			<artifactId>jpedal-lgpl</artifactId>
-			<version>4.74b27</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>org.jpedal</groupId> -->
+<!-- 			<artifactId>jpedal-lgpl</artifactId> -->
+<!-- 			<version>4.74b27</version> -->
+<!-- 		</dependency> -->
 		<dependency>
 			<groupId>org.icepdf</groupId>
 			<artifactId>icepdf-core</artifactId>
@@ -114,6 +114,24 @@
 			<groupId>com.github.jhonnymertz</groupId>
 			<artifactId>java-wkhtmltopdf-wrapper</artifactId>
 			<version>1.0.1-RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.giaybac</groupId>
+			<artifactId>traprange</artifactId>
+			<version>1.0</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.icepdf.os</groupId>
+			<artifactId>icepdf-viewer</artifactId>
+			<version>6.2.2</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jpedal</groupId>
+			<artifactId>OpenViewerFX</artifactId>
+			<version>7.12.28</version>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
