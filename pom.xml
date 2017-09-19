@@ -13,6 +13,8 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
 		<java-version>1.8</java-version>
 		<mavenVersion>3.3.3</mavenVersion>
 		<path-to-pdfclown>/home/claudius/workspaces/repositories/backup/pdfclown/pdfclown.jar</path-to-pdfclown>
@@ -60,11 +62,11 @@
 			<version>2.0.4</version>
 			<scope>provided</scope>
 		</dependency>
-<!-- 		<dependency> -->
-<!-- 			<groupId>org.jpedal</groupId> -->
-<!-- 			<artifactId>jpedal-lgpl</artifactId> -->
-<!-- 			<version>4.74b27</version> -->
-<!-- 		</dependency> -->
+		<!-- <dependency> -->
+		<!-- <groupId>org.jpedal</groupId> -->
+		<!-- <artifactId>jpedal-lgpl</artifactId> -->
+		<!-- <version>4.74b27</version> -->
+		<!-- </dependency> -->
 		<dependency>
 			<groupId>org.icepdf</groupId>
 			<artifactId>icepdf-core</artifactId>
@@ -135,20 +137,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.6.0</version>
-					<configuration>
-						<source>${java-version}</source>
-						<target>${java-version}</target>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-	</build>
 
 </project>
