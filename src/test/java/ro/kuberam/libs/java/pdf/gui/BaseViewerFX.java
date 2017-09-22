@@ -18,7 +18,7 @@
  * ---------------
  */
 
-package ro.kuberam.libs.java.pdf.contentManipulation;
+package ro.kuberam.libs.java.pdf.gui;
 
 
 import java.io.File;
