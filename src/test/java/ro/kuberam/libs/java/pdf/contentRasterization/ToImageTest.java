@@ -18,8 +18,6 @@ import org.icepdf.core.exceptions.PDFSecurityException;
 import org.icepdf.core.pobjects.Document;
 import org.icepdf.core.pobjects.Page;
 import org.icepdf.core.util.GraphicsRenderingHints;
-import org.jpedal.exception.PdfException;
-import org.jpedal.fonts.FontMappings;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.TestName;
