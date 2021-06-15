@@ -19,7 +19,7 @@
 		<mavenVersion>3.5</mavenVersion>
 		<path-to-pdfclown>/home/claudius/workspaces/repositories/backup/pdfclown/pdfclown.jar</path-to-pdfclown>
 		<path-to-pdfclown-samples>/home/claudius/workspaces/repositories/backup/pdfclown/pdfclown-samples-cli.jar</path-to-pdfclown-samples>
-		<pdfbox-version>2.0.8</pdfbox-version>
+		<pdfbox-version>2.0.24</pdfbox-version>
 	</properties>
 
 	<repositories>
